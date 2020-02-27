@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIPlayerIconManager : MonoBehaviour
 {
-    private int nbPlayer;
+    public int nbPlayer;
     GameObject[] controllerIcons;
     // Start is called before the first frame update
     void Start()

@@ -9,6 +9,8 @@ TagManager:
   - ControllerLobby
   - CharactersLobby
   - UIManager
+  - CharacterBanner
+  - SettingsLobby
   layers:
   - Default
   - TransparentFX
