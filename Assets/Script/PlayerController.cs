@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float speed = 0, jumpForce = 0;
     [SerializeField]
-    bool isGrounded, canMove, isAtck = false;
+    bool isGrounded, canMove, isAtck = false, isTp = false;
 
     Rigidbody rb;
 
@@ -43,12 +43,16 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
             rb.AddForce(new Vector3(0, -1, 0));
 
-        annim.SetBool("Atck", false);
-        if (Input.GetButtonDown("Fire1"))
+        //Debug annim
+        if (!isAtck && annim.GetBool("Atck"))
+            annim.SetBool("Atck", false);
+        if (!isTp && annim.GetBool("Tp"))
+            annim.SetBool("Tp", false);
+
+        if (Input.GetButtonDown("Fire1") && !isAtck)
             annim.SetBool("Atck", true);
 
-        annim.SetBool("Tp", false);
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && !isTp)
             annim.SetBool("Tp", true);
     }
     private void startTp()
@@ -64,6 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.isKinematic = false;
         canMove = true;
+        annim.SetBool("Tp", false);
     }
 
     private void startAtck()
@@ -73,6 +78,7 @@ public class PlayerController : MonoBehaviour
 
     private void endAtck()
     {
+        annim.SetBool("Atck", false);
         isAtck = false;
     }
 
