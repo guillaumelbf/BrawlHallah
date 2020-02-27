@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public XboxController ctrl;
     float speed = 10, jumpForce = 300;
     [SerializeField]
-    bool isGrounded, canMove;
+    bool isGrounded, canMove, isAtck = false, isTp = false;
 
     Rigidbody rb;
 
@@ -44,11 +44,18 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
             rb.AddForce(new Vector3(0, -1, 0));
 
-        if(Input.GetButtonDown("Fire1"))
-        { }
+        //Debug annim
+        if (!isAtck && annim.GetBool("Atck"))
+            annim.SetBool("Atck", false);
+        if (!isTp && annim.GetBool("Tp"))
+            annim.SetBool("Tp", false);
 
         annim.SetBool("Tp", false);
         if (XCI.GetButtonDown(XboxButton.B, ctrl))
+        if (Input.GetButtonDown("Fire1") && !isAtck)
+            annim.SetBool("Atck", true);
+
+        if (Input.GetButtonDown("Fire2") && !isTp)
             annim.SetBool("Tp", true);
     }
     private void startTp()
@@ -64,7 +71,20 @@ public class PlayerController : MonoBehaviour
     {
         rb.isKinematic = false;
         canMove = true;
+        annim.SetBool("Tp", false);
     }
+
+    private void startAtck()
+    {
+        isAtck = true;
+    }
+
+    private void endAtck()
+    {
+        annim.SetBool("Atck", false);
+        isAtck = false;
+    }
+
     private void FixedUpdate()
     {
         if(canMove && inputDir != Vector2.zero)
@@ -79,5 +99,11 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         if (collision.collider.gameObject.tag == "Ground") isGrounded = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player" && isAtck)
+            other.GetComponent<Rigidbody>().AddForce((transform.forward * 500)+Vector3.up*200);
     }
 }
