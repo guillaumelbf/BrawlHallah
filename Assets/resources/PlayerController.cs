@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XboxCtrlrInput;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    float speed = 0, jumpForce = 0;
+    public XboxController ctrl;
+    float speed = 10, jumpForce = 300;
     [SerializeField]
     bool isGrounded, canMove;
 
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 input = Vector2.ClampMagnitude(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")), 1f);
+        Vector2 input = Vector2.ClampMagnitude(new Vector2(XCI.GetAxisRaw(XboxAxis.LeftStickX, ctrl), XCI.GetAxisRaw(XboxAxis.LeftStickY, ctrl)), 1f);
         inputDir = input.normalized;
 
         if(canMove && inputDir != Vector2.zero)
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, 0.05f);
         }
 
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && XCI.GetButtonDown(XboxButton.A, ctrl))
             rb.AddForce(new Vector3(0, jumpForce, 0));
 
         if (!isGrounded)
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
         { }
 
         annim.SetBool("Tp", false);
-        if (Input.GetButtonDown("Fire2"))
+        if (XCI.GetButtonDown(XboxButton.B, ctrl))
             annim.SetBool("Tp", true);
     }
     private void startTp()
