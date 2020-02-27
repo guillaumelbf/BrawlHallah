@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - ControllerIcon
+  - ControllerLobby
+  - CharactersLobby
+  - UIManager
   layers:
   - Default
   - TransparentFX
@@ -14,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - BgImg
   - 
   - 
   - 
