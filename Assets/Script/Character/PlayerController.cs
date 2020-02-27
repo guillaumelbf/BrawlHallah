@@ -50,12 +50,10 @@ public class PlayerController : MonoBehaviour
         if (!isTp && annim.GetBool("Tp"))
             annim.SetBool("Tp", false);
 
-        annim.SetBool("Tp", false);
-        if (XCI.GetButtonDown(XboxButton.B, ctrl))
-        if (Input.GetButtonDown("Fire1") && !isAtck)
+        if (XCI.GetButtonDown(XboxButton.X, ctrl) && !isAtck)
             annim.SetBool("Atck", true);
 
-        if (Input.GetButtonDown("Fire2") && !isTp)
+        if (XCI.GetButtonDown(XboxButton.B, ctrl) && !isTp)
             annim.SetBool("Tp", true);
     }
     private void startTp()
