@@ -2,7 +2,11 @@ fileFormatVersion: 2
 <<<<<<< Updated upstream
 guid: 97b163d221d4a1e449c7df59b6887896
 =======
+<<<<<<< HEAD
 guid: c5a91ffc7bf2f54469e16715cdd6f5a8
+=======
+guid: c5fa102439a3ca447bcaae33e961afb6
+>>>>>>> master
 >>>>>>> Stashed changes
 folderAsset: yes
 DefaultImporter:

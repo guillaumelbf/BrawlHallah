@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MenusManager : MonoBehaviour
 {
-    private int nbPlayer;
+    public int nbPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,29 +15,47 @@ public class MenusManager : MonoBehaviour
     void Update()
     {
         
+
     }
 
-    public void ControllerToCharactersLobby()
+    private void SetNbCharactersLobby()
     {
-        GameObject UImanager = GameObject.FindGameObjectWithTag("UIManager");
-        for (int i =0; i < UImanager.transform.childCount; i++)
+        for (int i = 0; i < gameObject.transform.parent.parent.childCount; i++)
         {
-            if (UImanager.transform.GetChild(i).tag == "CharactersLobby")
-                UImanager.transform.GetChild(i).gameObject.SetActive(true);
+            GameObject child = gameObject.transform.parent.parent.GetChild(i).gameObject;
+            if (child.tag == "CharactersLobby")
+            {
+                //child.GetComponent<UIClassesManager>().nbPlayer = nbPlayer;
+            }
         }
-        GameObject.FindGameObjectWithTag("ControllerLobby").SetActive(false);
-        nbPlayer = GameObject.FindGameObjectWithTag("ControllerLobby").GetComponent<UIPlayerIconManager>().getNbPlayers();
     }
 
-    public void CharactersToControllerLobby()
+    public void GoToMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
+
+    public void CharactersToSettingsLobby()
     {
         GameObject UImanager = GameObject.FindGameObjectWithTag("UIManager");
         for (int i = 0; i < UImanager.transform.childCount; i++)
         {
-            if (UImanager.transform.GetChild(i).tag == "ControllerLobby")
+            if (UImanager.transform.GetChild(i).tag == "SettingsLobby")
                 UImanager.transform.GetChild(i).gameObject.SetActive(true);
         }
         GameObject.FindGameObjectWithTag("CharactersLobby").SetActive(false);
     }
+
+    public void SettingsToCharactersLobby()
+    {
+        GameObject UImanager = GameObject.FindGameObjectWithTag("UIManager");
+        for (int i = 0; i < UImanager.transform.childCount; i++)
+        {
+            if (UImanager.transform.GetChild(i).tag == "CharactersLobby")
+                UImanager.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        GameObject.FindGameObjectWithTag("SettingsLobby").SetActive(false);
+    }
+
 
 }
